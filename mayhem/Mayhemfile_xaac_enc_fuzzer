@@ -1,0 +1,15 @@
+project: libxaac
+# xaac_enc_fuzzer (from fuzzer/xaac_enc_fuzzer.cpp, copied into mayhem/harnesses/) — the AAC ENCODER.
+# Input bytes are consumed by a FuzzedDataProvider to synthesize the encoder config (AOT, sample
+# rate, channels, DRC, …) + PCM, then drive ixheaace_create / ixheaace_process (libxaacenc API).
+target: xaac_enc_fuzzer
+
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/xaac_enc_fuzzer/testsuite
+
+
+cmds:
+  - cmd: /mayhem/xaac_enc_fuzzer
+    libfuzzer: true
+    dictionary: /mayhem/mayhem/xaac_enc_fuzzer.dict

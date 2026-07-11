@@ -1,0 +1,15 @@
+project: libxaac
+# xaac_dec_fuzzer (from fuzzer/xaac_dec_fuzzer.cpp, copied into mayhem/harnesses/) — the AAC DECODER.
+# Input is a raw elementary AAC bitstream; the harness sniffs bytes 0-1 (0xFF 0xFx => ADTS, else
+# raw/MP4 AudioSpecificConfig) and drives initDecoder -> configXAACDecoder -> decodeXAACStream.
+target: xaac_dec_fuzzer
+
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/xaac_dec_fuzzer/testsuite
+
+
+cmds:
+  - cmd: /mayhem/xaac_dec_fuzzer
+    libfuzzer: true
+    dictionary: /mayhem/mayhem/xaac_dec_fuzzer.dict
